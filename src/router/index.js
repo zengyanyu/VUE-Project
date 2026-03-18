@@ -21,14 +21,14 @@ const routes = [
             {
                 // 员工管理
                 path: '/emp',
-                name: '',
+                name: 'emp',
                 component: EmployeeList
             },
             // 其他路由可后续添加
             {
                 // 部门管理
                 path: '/dept',
-                name: '',
+                name: 'dept',
                 component: DepartmentList
             }
 
