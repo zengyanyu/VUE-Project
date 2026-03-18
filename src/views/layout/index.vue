@@ -78,7 +78,7 @@ import {ElMessage} from 'element-plus'
                 </el-icon>
                 员工信息统计
               </el-menu-item>
-              <el-menu-item index="/clazzStat">
+              <el-menu-item index="/stuStat">
                 <el-icon>
                   <HomeFilled/>
                 </el-icon>

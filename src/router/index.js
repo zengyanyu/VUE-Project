@@ -1,5 +1,9 @@
 import EmployeeList from '../views/emp/index.vue'
+import ClazzList from '../views/clazz/index.vue'
+import StuList from '../views/stu/index.vue'
 import DepartmentList from '../views/dept/index.vue'
+import StuStatList from '../views/stuStat/index.vue'
+import EmpStatList from '../views/empStat/index.vue'
 import IndexList from '../views/index/index.vue'
 import layoutView from '../views/layout/index.vue'
 import LoginPage from '../login/index.vue'
@@ -19,6 +23,16 @@ const routes = [
                 component: IndexList
             },
             {
+                path: '/clazz',
+                name: 'clazz',
+                component: ClazzList
+            },
+            {
+                path: '/stu',
+                name: 'stu',
+                component: StuList
+            },
+            {
                 // 员工管理
                 path: '/emp',
                 name: 'emp',
@@ -30,15 +44,23 @@ const routes = [
                 path: '/dept',
                 name: 'dept',
                 component: DepartmentList
+            },
+            {
+                path: '/empStat',
+                name: 'empStat',
+                component: EmpStatList
+            },
+            {
+                path: '/stuStat',
+                name: 'stuStat',
+                component: StuStatList
             }
-
         ]
     },
     {
         path: '/login',// 登录
         name: "login",
         component: LoginPage
-
     }
 ]
 
