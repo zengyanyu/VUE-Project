@@ -2,7 +2,8 @@
 import {ref, onMounted} from 'vue'
 import axios from 'axios'
 
-import {queryAllApi} from '../../api/dept.js'
+import {queryAllApi, addApi, updateApi} from '../../api/dept.js'
+import {ElMessage} from "element-plus";
 
 onMounted(() => {
   search()
@@ -20,13 +21,71 @@ const search = async () => {
 }
 const deptList = ref([])
 
+const dialogFormVisible = ref(false)
+const formTitle = ref('')
+
+const deptFormRef = ref()
+const dept = ref({
+  deptName: '',
+})
+
+// 新增部门按钮
+const addDept = () => {
+  dialogFormVisible.value = true
+  formTitle.value = '新增部门'
+
+  dept.value = {deptName: ''}
+  // 重新表单的校验规则-提示信息
+  if (deptFormRef.value) {
+    deptFormRef.value.resetFields();
+  }
+}
+// 编辑部门按钮
+const updateDept = () => {
+  dialogFormVisible.value = true
+  formTitle.value = '编辑部门'
+}
+
+const rules = ref({
+  deptName: [
+    {
+      required: true, message: '请输入部门名称', trigger: 'blur'
+    },
+    {
+      min: 3, max: 10, message: "部门名称的长度应该在3-10个字符", trigger: 'blur'
+    }
+  ]
+})
+
+// 保存操作
+const save = async () => {
+  // 表单校验
+  if (!deptFormRef.value) {
+    return;
+  }
+  deptFormRef.value.validate(async (valid) => {// valid:表示是否校验通过
+    // 通过
+    if (valid) {
+      const result = await addApi(dept.value)
+      if (result.code == 200) {
+        ElMessage.success(result.msg);
+        dialogFormVisible.value = false
+        search()
+      } else {
+        ElMessage.error(result.msg)
+      }
+    } else {// 表单校验不通过
+      ElMessage.error("表单校验不通过!")
+    }
+  })
+}
 </script>
 
 <template>
   <h3>部门管理</h3>
 
   <div class="container">
-    <el-button type="primary"> + 新增部门</el-button>
+    <el-button type="primary" @click="addDept"> + 新增部门</el-button>
   </div>
 
   <div class="container">
@@ -36,7 +95,7 @@ const deptList = ref([])
       <el-table-column prop="updateTime" label="最后操作时间" width="300" align="center"/>
       <el-table-column label="操作" align="center">
         <template #default="scope">
-          <el-button type="primary" size="small">
+          <el-button type="primary" size="small" @click="updateDept">
             <el-icon>
               <EditPen/>
             </el-icon>
@@ -52,6 +111,22 @@ const deptList = ref([])
       </el-table-column>
     </el-table>
   </div>
+
+  <!--  Dialog对话框  -->
+  <el-dialog v-model="dialogFormVisible" :title='formTitle' width="500">
+    <el-form :model="dept" :rules="rules" ref="deptFormRef">
+      <el-form-item label="部门名称" label-width="100px" prop="deptName">
+        <el-input v-model="dept.deptName" clearable/>
+      </el-form-item>
+    </el-form>
+    <template #footer>
+      <div class="dialog-footer">
+        <el-button @click="dialogFormVisible = false">取消</el-button>
+        <el-button type="primary" @click="save">确定</el-button>
+      </div>
+    </template>
+  </el-dialog>
+
 </template>
 
 <style scoped>
