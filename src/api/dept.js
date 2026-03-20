@@ -15,4 +15,9 @@ export const updateApi = (dept) => {
     return request.post("/department/save", dept);
 }
 
+// 根据主键ID查询
+export const queryByIdApi = (id) => {
+    return request.get(`/department/get/${id}`);
+}
+
 // 删除

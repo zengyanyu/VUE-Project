@@ -2,7 +2,7 @@
 import {ref, onMounted} from 'vue'
 import axios from 'axios'
 
-import {queryAllApi, addApi, updateApi} from '../../api/dept.js'
+import {queryAllApi, addApi, updateApi, queryByIdApi} from '../../api/dept.js'
 import {ElMessage} from "element-plus";
 
 onMounted(() => {
@@ -35,15 +35,26 @@ const addDept = () => {
   formTitle.value = '新增部门'
 
   dept.value = {deptName: ''}
-  // 重新表单的校验规则-提示信息
+  // 重置表单的校验规则-提示信息
   if (deptFormRef.value) {
     deptFormRef.value.resetFields();
   }
 }
 // 编辑部门按钮
-const updateDept = () => {
-  dialogFormVisible.value = true
+const edit = async (id) => {
   formTitle.value = '编辑部门'
+  // 重置表单的校验规则-提示信息
+  if (deptFormRef.value) {
+    deptFormRef.value.resetFields();
+  }
+
+  // 查询数据
+  const result = await queryByIdApi(id);
+  if (result.code == '200') {
+    dialogFormVisible.value = true
+    // 赋值
+    dept.value = result.data;
+  }
 }
 
 const rules = ref({
@@ -95,7 +106,7 @@ const save = async () => {
       <el-table-column prop="updateTime" label="最后操作时间" width="300" align="center"/>
       <el-table-column label="操作" align="center">
         <template #default="scope">
-          <el-button type="primary" size="small" @click="updateDept">
+          <el-button type="primary" size="small" @click="edit(scope.row.id)">
             <el-icon>
               <EditPen/>
             </el-icon>
