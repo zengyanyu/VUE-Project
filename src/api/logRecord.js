@@ -4,3 +4,8 @@ import request from "../utils/request";
 export const queryAllApi = () => {
     return request.get("/log-record/findAll");
 }
+
+// 分页查询
+export const pageApi = (pageNum, pageSize, startTime, endTime, operateName) => {
+    return request.get(`/log-record/page?pageNum=${pageNum}&pageSize=${pageSize}&startTime=${startTime}&endTime=${endTime}&operateName=${operateName}`);
+}

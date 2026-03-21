@@ -1,6 +1,6 @@
 <script setup>
 
-import {queryAllApi} from '../../api/logRecord.js'
+import {queryAllApi, pageApi} from '../../api/logRecord.js'
 import {onMounted, ref, watch} from "vue";
 
 onMounted(() => {
@@ -12,38 +12,69 @@ const queryForm = ref({
   operateName: '',
   date: [],
   startTime: '',
-  endTime: ''
+  endTime: '',
+  pageNum: 1,
+  pageSize: 10,
+  total: 0
 })
 
 // 查询
 const search = async () => {
-  // 获取查询表单的值
-  // let value1 = queryForm.value.startTime[0];
-  // let value2 = queryForm.value.startTime[1];
-  // queryForm.value.startTime = value1;
-  // queryForm.value.endTime = value2;
-  // console.log(JSON.stringify(queryForm.value));
+  // const result = await queryAllApi();
+  // if (result.code == '200') {
+  //   logRecordList.value = result.data;
+  // }
 
-  const result = await queryAllApi();
-  if (result.code == '200') {
-    logRecordList.value = result.data;
-  }
+  const result = await pageApi(queryForm.value.pageNum,
+      queryForm.value.pageSize,
+      queryForm.value.startTime,
+      queryForm.value.endTime,
+      queryForm.value.operateName);
+
+      logRecordList.value = result.records;
+      console.log(JSON.stringify(result));
+
+      queryForm.value.pageNum = result.current;
+      queryForm.value.pageSize = result.size;
+      queryForm.value.total = result.total;
 }
 
 const clear = () => {
   queryForm.value = {
     operateName: '',
     date: [],
+    startTime: '',
+    endTime: '',
+    pageNum: 1,
+    pageSize: 20,
   }
   search()
 }
 
 // 侦听
 watch(queryForm, (newVal, oldVal) => {
-  queryForm.value.startTime = newVal.date[0]
-  queryForm.value.Time = newVal.date[1]
-  console.log(JSON.stringify(queryForm.value));
+  if (newVal.date.length != 0) {
+    queryForm.value.startTime = newVal.date[0]
+    queryForm.value.endTime = newVal.date[1]
+  } else {
+    queryForm.value.startTime = ''
+    queryForm.value.endTime = ''
+  }
+
+  queryForm.value.pageSize = newVal.pageSize
+  queryForm.value.pageNum = newVal.pageNum
+  queryForm.value.operateName = newVal.operateName
 }, {deep: true})
+
+// 分页
+const background = ref(true)
+
+const handleSizeChange = (val) => {
+  search();
+}
+const handleCurrentChange = (val) => {
+  search();
+}
 </script>
 
 <template>
@@ -80,6 +111,20 @@ watch(queryForm, (newVal, oldVal) => {
       <el-table-column prop="responseTime" label="请求结束时间" width="180" align="center"/>
       <el-table-column prop="status" label="操作状态" width="100" align="center"/>
     </el-table>
+  </div>
+
+  <!-- 分页条 -->
+  <div class="container">
+    <el-pagination
+        v-model:current-page="queryForm.pageNum"
+        v-model:page-size="queryForm.pageSize"
+        :page-sizes="[10, 20, 50, 100]"
+        :background="background"
+        layout="total, sizes, prev, pager, next, jumper"
+        :total="queryForm.total"
+        @size-change="handleSizeChange"
+        @current-change="handleCurrentChange"
+    />
   </div>
 </template>
 
