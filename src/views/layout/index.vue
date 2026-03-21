@@ -2,15 +2,31 @@
 import {Edit, Delete, Search} from '@element-plus/icons-vue'
 import {ElMessage} from 'element-plus'
 
-// import routerView from '.'
+// 修改密码
+const handleModifyPwd = () => {
+
+}
+
+// 退出登录
+const handleLogout = () => {
+
+}
 
 </script>
 
 <template>
   <div>
     <el-container class="container">
-      <el-header style="background-color: gray;">
-        <span style="font-size: 22px">智能学习辅助系统</span>
+      <el-header style="background-color: gray; display: flex; justify-content: space-between; align-items: center;">
+        <span style="font-size: 22px; color: white;">智能学习辅助系统</span>
+        <div class="header-buttons">
+          <el-button type="primary" plain @click="handleModifyPwd" size="small">
+            修改密码
+          </el-button>
+          <el-button type="danger" plain @click="handleLogout" size="small">
+            退出登录
+          </el-button>
+        </div>
       </el-header>
 
       <el-container>
@@ -105,4 +121,8 @@ import {ElMessage} from 'element-plus'
 </template>
 
 <style scoped>
+.header-buttons {
+  display: flex;
+  gap: 6px; /* 按钮之间的间距 */
+}
 </style>
