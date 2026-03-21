@@ -2,8 +2,8 @@
 import {ref, onMounted} from 'vue'
 import axios from 'axios'
 
-import {queryAllApi, addApi, updateApi, queryByIdApi} from '../../api/dept.js'
-import {ElMessage} from "element-plus";
+import {queryAllApi, addApi, queryByIdApi, deleteByIdApi} from '../../api/dept.js'
+import {ElMessage, ElMessageBox} from "element-plus";
 
 onMounted(() => {
   search()
@@ -55,6 +55,34 @@ const edit = async (id) => {
     // 赋值
     dept.value = result.data;
   }
+}
+
+// 删除
+const deleteBtn = (id) => {
+  ElMessageBox.confirm(
+      '确认删除操作?',
+      '温馨提示',
+      {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        type: 'warning',
+      }
+  )
+      .then(async () => {
+        const result = await deleteByIdApi(id);
+
+        ElMessage({
+          type: 'success',
+          message: result.msg,
+        })
+        search()
+      })
+      .catch(() => {
+        // ElMessage({
+        //   type: 'info',
+        //   // message: 'Delete canceled',
+        // })
+      })
 }
 
 const rules = ref({
@@ -112,7 +140,7 @@ const save = async () => {
             </el-icon>
             编辑
           </el-button>
-          <el-button type="danger" size="small">
+          <el-button type="danger" size="small" @click="deleteBtn(scope.row.id)">
             <el-icon>
               <Delete/>
             </el-icon>
@@ -125,6 +153,7 @@ const save = async () => {
 
   <!--  Dialog对话框  -->
   <el-dialog v-model="dialogFormVisible" :title='formTitle' width="500">
+    <!--    {{dept}}-->
     <el-form :model="dept" :rules="rules" ref="deptFormRef">
       <el-form-item label="部门名称" label-width="100px" prop="deptName">
         <el-input v-model="dept.deptName" clearable/>
@@ -143,6 +172,5 @@ const save = async () => {
 <style scoped>
 .container {
   margin: 10px 0px;
-
 }
 </style>

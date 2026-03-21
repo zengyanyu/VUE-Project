@@ -6,6 +6,7 @@ import StuStatList from '../views/stuStat/index.vue'
 import EmpStatList from '../views/empStat/index.vue'
 import IndexList from '../views/index/index.vue'
 import layoutView from '../views/layout/index.vue'
+import LogRecordList from '../views/logRecord/index.vue'
 import LoginPage from '../login/index.vue'
 import {createRouter, createWebHistory} from 'vue-router'
 
@@ -38,12 +39,16 @@ const routes = [
                 name: 'emp',
                 component: EmployeeList
             },
-            // 其他路由可后续添加
             {
                 // 部门管理
                 path: '/dept',
                 name: 'dept',
                 component: DepartmentList
+            },
+            {
+                path: '/logRecord',
+                name: 'logRecord',
+                component: LogRecordList
             },
             {
                 path: '/empStat',

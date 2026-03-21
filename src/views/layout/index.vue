@@ -64,6 +64,12 @@ import {ElMessage} from 'element-plus'
                 </el-icon>
                 员工管理
               </el-menu-item>
+              <el-menu-item index="/logRecord">
+                <el-icon>
+                  <HomeFilled/>
+                </el-icon>
+                日志记录
+              </el-menu-item>
             </el-sub-menu>
             <el-sub-menu index="3">
               <template #title>

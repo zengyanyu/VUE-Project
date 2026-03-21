@@ -5,13 +5,8 @@ export const queryAllApi = () => {
     return request.get("/department/findAll");
 }
 
-// 新增
+// 新增/修改
 export const addApi = (dept) => {
-    return request.post("/department/save", dept);
-}
-
-// 修改
-export const updateApi = (dept) => {
     return request.post("/department/save", dept);
 }
 
@@ -21,3 +16,6 @@ export const queryByIdApi = (id) => {
 }
 
 // 删除
+export const deleteByIdApi = (id) => {
+    return request.get(`/department/del/${id}`);
+}
