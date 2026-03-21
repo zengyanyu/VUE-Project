@@ -1,6 +1,6 @@
 <script setup>
 
-import {queryAllApi, pageApi} from '../../api/logRecord.js'
+import {queryPageApi} from '../../api/logRecord.js'
 import {onMounted, ref, watch} from "vue";
 
 onMounted(() => {
@@ -20,23 +20,18 @@ const queryForm = ref({
 
 // 查询
 const search = async () => {
-  // const result = await queryAllApi();
-  // if (result.code == '200') {
-  //   logRecordList.value = result.data;
-  // }
-
-  const result = await pageApi(queryForm.value.pageNum,
+  const result = await queryPageApi(queryForm.value.pageNum,
       queryForm.value.pageSize,
       queryForm.value.startTime,
       queryForm.value.endTime,
       queryForm.value.operateName);
 
-      logRecordList.value = result.records;
-      console.log(JSON.stringify(result));
+  logRecordList.value = result.records;
+  console.log(JSON.stringify(result));
 
-      queryForm.value.pageNum = result.current;
-      queryForm.value.pageSize = result.size;
-      queryForm.value.total = result.total;
+  queryForm.value.pageNum = result.current;
+  queryForm.value.pageSize = result.size;
+  queryForm.value.total = result.total;
 }
 
 const clear = () => {
@@ -101,16 +96,18 @@ const handleCurrentChange = (val) => {
         <el-button type="info" @click="clear">清空</el-button>
       </el-form-item>
     </el-form>
-    <el-table :data="logRecordList" border style="width: 100%">
-      <el-table-column type="index" label="序号" width="60" align="center"/>
-      <el-table-column prop="method" label="请求方式" width="100" align="center"/>
-      <el-table-column prop="operateName" label="操作名称" align="center"/>
-      <el-table-column prop="path" label="请求路径" align="center"/>
-      <!--      <el-table-column prop="requestIp" label="请求IP地址" align="center"/>-->
-      <el-table-column prop="requestTime" label="请求开始时间" width="180" align="center"/>
-      <el-table-column prop="responseTime" label="请求结束时间" width="180" align="center"/>
-      <el-table-column prop="status" label="操作状态" width="100" align="center"/>
-    </el-table>
+    <el-scrollbar height="400px">
+      <el-table :data="logRecordList" border style="width: 100%">
+        <el-table-column type="index" label="序号" width="60" align="center"/>
+        <el-table-column prop="method" label="请求方式" width="100" align="center"/>
+        <el-table-column prop="operateName" label="操作名称" align="center"/>
+        <el-table-column prop="path" label="请求路径" align="center"/>
+        <!--      <el-table-column prop="requestIp" label="请求IP地址" align="center"/>-->
+        <el-table-column prop="requestTime" label="请求开始时间" width="180" align="center"/>
+        <el-table-column prop="responseTime" label="请求结束时间" width="180" align="center"/>
+        <el-table-column prop="status" label="操作状态" width="100" align="center"/>
+      </el-table>
+    </el-scrollbar>
   </div>
 
   <!-- 分页条 -->
@@ -131,5 +128,17 @@ const handleCurrentChange = (val) => {
 <style scoped>
 .container {
   margin: 10px 0px;
+}
+
+.scrollbar-demo-item {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 50px;
+  margin: 10px;
+  text-align: center;
+  border-radius: 4px;
+  background: var(--el-color-primary-light-9);
+  color: var(--el-color-primary);
 }
 </style>

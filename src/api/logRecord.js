@@ -6,6 +6,6 @@ export const queryAllApi = () => {
 }
 
 // 分页查询
-export const pageApi = (pageNum, pageSize, startTime, endTime, operateName) => {
+export const queryPageApi = (pageNum, pageSize, startTime, endTime, operateName) => {
     return request.get(`/log-record/page?pageNum=${pageNum}&pageSize=${pageSize}&startTime=${startTime}&endTime=${endTime}&operateName=${operateName}`);
 }
