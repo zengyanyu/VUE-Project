@@ -40,6 +40,7 @@ const addDept = () => {
     deptFormRef.value.resetFields();
   }
 }
+
 // 编辑部门按钮
 const edit = async (id) => {
   formTitle.value = '编辑部门'
@@ -124,7 +125,7 @@ const save = async () => {
   <h3>部门管理</h3>
 
   <div class="container">
-    <el-button type="primary" @click="addDept"> + 新增部门</el-button>
+    <el-button type="primary" @click="addDept" size="small"> + 新增部门</el-button>
   </div>
 
   <div class="container">

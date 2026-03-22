@@ -4,6 +4,7 @@ import StuList from '../views/stu/index.vue'
 import DepartmentList from '../views/dept/index.vue'
 import StuStatList from '../views/stuStat/index.vue'
 import EmpStatList from '../views/empStat/index.vue'
+import DictList from '../views/dict/index.vue'
 import IndexList from '../views/index/index.vue'
 import layoutView from '../views/layout/index.vue'
 import LogRecordList from '../views/logRecord/index.vue'
@@ -59,6 +60,11 @@ const routes = [
                 path: '/stuStat',
                 name: 'stuStat',
                 component: StuStatList
+            },
+            {
+                path: '/dict',
+                name: 'dict',
+                component: DictList
             }
         ]
     },
