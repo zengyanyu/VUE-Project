@@ -168,7 +168,8 @@ const handleCurrentChange = (val) => {
     <el-table :data="deptList" border style="width: 100%">
       <el-table-column type="index" label="序号" width="100" align="center"/>
       <el-table-column prop="deptName" label="部门名称" width="300" align="center"/>
-      <el-table-column prop="updateTime" label="最后操作时间" width="300" align="center"/>
+      <el-table-column prop="createTime" label="创建时间" align="center"/>
+      <el-table-column prop="updateTime" label="修改时间" align="center"/>
       <el-table-column label="操作" align="center">
         <template #default="scope">
           <el-button type="primary" size="small" @click="edit(scope.row.id)">
