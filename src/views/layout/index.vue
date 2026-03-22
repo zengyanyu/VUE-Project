@@ -64,7 +64,7 @@ const handleLogout = () => {
             <el-sub-menu index="2">
               <template #title>
                 <el-icon>
-                  <message/>
+                  <Setting/>
                 </el-icon>
                 系统信息管理
               </template>
@@ -82,7 +82,7 @@ const handleLogout = () => {
               </el-menu-item>
               <el-menu-item index="/logRecord">
                 <el-icon>
-                  <HomeFilled/>
+                  <Search/>
                 </el-icon>
                 日志记录
               </el-menu-item>
@@ -91,6 +91,12 @@ const handleLogout = () => {
                   <HomeFilled/>
                 </el-icon>
                 字典管理
+              </el-menu-item>
+              <el-menu-item index="/role">
+                <el-icon>
+                  <Menu/>
+                </el-icon>
+                角色管理
               </el-menu-item>
             </el-sub-menu>
             <el-sub-menu index="3">

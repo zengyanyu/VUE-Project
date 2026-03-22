@@ -1,5 +1,10 @@
 import request from "../utils/request";
 
+// 分页查询
+export const queryPageApi = (pageNum, pageSize, deptName) => {
+    return request.get(`/department/page?pageNum=${pageNum}&pageSize=${pageSize}&deptName=${deptName}`);
+}
+
 // 查询全部部门数据
 export const queryAllApi = () => {
     return request.get("/department/findAll");

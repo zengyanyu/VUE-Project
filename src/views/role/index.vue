@@ -1,26 +1,38 @@
 <script setup>
-import {ref, onMounted} from 'vue'
-
-import {queryPageApi, addApi, queryByIdApi, deleteByIdApi} from '../../api/dept.js'
+import {queryPageApi, queryByIdApi, deleteByIdApi, addApi} from '../../api/role.js'
+import {onMounted, ref, watch} from "vue";
 import {ElMessage, ElMessageBox} from "element-plus";
 
 onMounted(() => {
   search()
 })
 
+const roleList = ref([])
+
+const dialogFormVisible = ref(false)
+const formTitle = ref('')
+const roleFormRef = ref()
+const role = ref({
+  roleCode: '',
+  roleName: ''
+})
+
 const queryForm = ref({
   pageNum: 1,
   pageSize: 10,
   total: 0,
-  deptName: ''
+  roleCode: '',
+  roleName: ''
 })
 
+// 查询
 const search = async () => {
   const result = await queryPageApi(queryForm.value.pageNum,
       queryForm.value.pageSize,
-      queryForm.value.deptName);
+      queryForm.value.roleCode,
+      queryForm.value.roleName);
 
-  deptList.value = result.records;
+  roleList.value = result.records;
 
   queryForm.value.pageNum = result.current;
   queryForm.value.pageSize = result.size;
@@ -29,41 +41,32 @@ const search = async () => {
 
 const clear = () => {
   queryForm.value = {
-    deptName: '',
+    roleCode: '',
+    roleName: '',
     pageNum: 1,
     pageSize: 20,
   }
   search()
 }
 
-const deptList = ref([])
-
-const dialogFormVisible = ref(false)
-const formTitle = ref('')
-
-const deptFormRef = ref()
-const dept = ref({
-  deptName: '',
-})
-
-// 新增部门按钮
-const addDept = () => {
+// 新增角色按钮
+const addRole = () => {
   dialogFormVisible.value = true
-  formTitle.value = '新增部门'
+  formTitle.value = '新增角色'
 
-  dept.value = {deptName: ''}
+  role.value = {roleCode: '', roleName: ''}
   // 重置表单的校验规则-提示信息
-  if (deptFormRef.value) {
-    deptFormRef.value.resetFields();
+  if (roleFormRef.value) {
+    roleFormRef.value.resetFields();
   }
 }
 
-// 编辑部门按钮
+// 编辑角色按钮
 const edit = async (id) => {
-  formTitle.value = '编辑部门'
+  formTitle.value = '编辑角色'
   // 重置表单的校验规则-提示信息
-  if (deptFormRef.value) {
-    deptFormRef.value.resetFields();
+  if (roleFormRef.value) {
+    roleFormRef.value.resetFields();
   }
 
   // 查询数据
@@ -71,7 +74,7 @@ const edit = async (id) => {
   if (result.code == '200') {
     dialogFormVisible.value = true
     // 赋值
-    dept.value = result.data;
+    role.value = result.data;
   }
 }
 
@@ -104,12 +107,20 @@ const deleteBtn = (id) => {
 }
 
 const rules = ref({
-  deptName: [
+  roleCode: [
     {
-      required: true, message: '请输入部门名称', trigger: 'blur'
+      required: true, message: '请输入角色编码', trigger: 'blur'
     },
     {
-      min: 3, max: 10, message: "部门名称的长度应该在3-10个字符", trigger: 'blur'
+      min: 3, max: 10, message: "角色编码的长度应该在3-10个字符", trigger: 'blur'
+    }
+  ],
+  roleName: [
+    {
+      required: true, message: '请输入角色名称', trigger: 'blur'
+    },
+    {
+      min: 3, max: 10, message: "角色名称的长度应该在3-10个字符", trigger: 'blur'
     }
   ]
 })
@@ -117,13 +128,13 @@ const rules = ref({
 // 保存操作
 const save = async () => {
   // 表单校验
-  if (!deptFormRef.value) {
+  if (!roleFormRef.value) {
     return;
   }
-  deptFormRef.value.validate(async (valid) => {// valid:表示是否校验通过
+  roleFormRef.value.validate(async (valid) => {// valid:表示是否校验通过
     // 通过
     if (valid) {
-      const result = await addApi(dept.value)
+      const result = await addApi(role.value)
       if (result.code == 200) {
         ElMessage.success(result.msg);
         dialogFormVisible.value = false
@@ -149,26 +160,28 @@ const handleCurrentChange = (val) => {
 </script>
 
 <template>
-  <h3>部门管理</h3>
+  <h3>角色管理</h3>
 
   <div class="container">
-    <el-button type="primary" @click="addDept" size="small"> + 新增部门</el-button>
+    <el-button type="primary" @click="addRole" size="small"> + 新增角色</el-button>
   </div>
-
   <div class="container">
     <el-form :inline="true" :model="queryForm" class="demo-form-inline">
-      <el-form-item label="部门名称">
-        <el-input v-model="queryForm.deptName" placeholder="请输入部门名称" clearable/>
+      <el-form-item label="角色编码">
+        <el-input v-model="queryForm.roleCode" placeholder="请输入角色编码" clearable/>
+      </el-form-item>
+      <el-form-item label="角色名称">
+        <el-input v-model="queryForm.roleName" placeholder="请输入角色名称" clearable/>
       </el-form-item>
       <el-form-item>
         <el-button type="primary" @click="search">查询</el-button>
         <el-button type="info" @click="clear">清空</el-button>
       </el-form-item>
     </el-form>
-    <el-table :data="deptList" border style="width: 100%">
-      <el-table-column type="index" label="序号" width="100" align="center"/>
-      <el-table-column prop="deptName" label="部门名称" width="300" align="center"/>
-      <el-table-column prop="updateTime" label="最后操作时间" width="300" align="center"/>
+    <el-table :data="roleList" border style="width: 100%">
+      <el-table-column type="index" label="序号" width="60" align="center"/>
+      <el-table-column prop="roleCode" label="角色编码" align="center"/>
+      <el-table-column prop="roleName" label="角色名称" align="center"/>
       <el-table-column label="操作" align="center">
         <template #default="scope">
           <el-button type="primary" size="small" @click="edit(scope.row.id)">
@@ -204,10 +217,12 @@ const handleCurrentChange = (val) => {
 
   <!--  Dialog对话框  -->
   <el-dialog v-model="dialogFormVisible" :title='formTitle' width="500">
-    <!--    {{dept}}-->
-    <el-form :model="dept" :rules="rules" ref="deptFormRef">
-      <el-form-item label="部门名称" label-width="100px" prop="deptName">
-        <el-input v-model="dept.deptName" clearable/>
+    <el-form :model="role" :rules="rules" ref="roleFormRef">
+      <el-form-item label="角色编码" label-width="100px" prop="roleCode">
+        <el-input v-model="role.roleCode" clearable/>
+      </el-form-item>
+      <el-form-item label="角色名称" label-width="100px" prop="roleName">
+        <el-input v-model="role.roleName" clearable/>
       </el-form-item>
     </el-form>
     <template #footer>
@@ -217,7 +232,6 @@ const handleCurrentChange = (val) => {
       </div>
     </template>
   </el-dialog>
-
 </template>
 
 <style scoped>

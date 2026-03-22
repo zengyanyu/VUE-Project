@@ -56,7 +56,7 @@ const addDict = () => {
   dialogFormVisible.value = true
   formTitle.value = '新增字典'
 
-  addDict.value = {code: '', name: ''}
+  dict.value = {code: '', name: ''}
   // 重置表单的校验规则-提示信息
   if (dictFormRef.value) {
     dictFormRef.value.resetFields();
@@ -201,24 +201,6 @@ const handleCurrentChange = (val) => {
         </template>
       </el-table-column>
     </el-table>
-
-    <!--  Dialog对话框  -->
-    <el-dialog v-model="dialogFormVisible" :title='formTitle' width="500">
-      <el-form :model="dict" :rules="rules" ref="dictFormRef">
-        <el-form-item label="字典编码" label-width="100px" prop="code">
-          <el-input v-model="dict.code" clearable/>
-        </el-form-item>
-        <el-form-item label="字典名称" label-width="100px" prop="name">
-          <el-input v-model="dict.name" clearable/>
-        </el-form-item>
-      </el-form>
-      <template #footer>
-        <div class="dialog-footer">
-          <el-button @click="dialogFormVisible = false">取消</el-button>
-          <el-button type="primary" @click="save">确定</el-button>
-        </div>
-      </template>
-    </el-dialog>
   </div>
 
   <!-- 分页条 -->
@@ -234,6 +216,24 @@ const handleCurrentChange = (val) => {
         @current-change="handleCurrentChange"
     />
   </div>
+
+  <!--  Dialog对话框  -->
+  <el-dialog v-model="dialogFormVisible" :title='formTitle' width="500">
+    <el-form :model="dict" :rules="rules" ref="dictFormRef">
+      <el-form-item label="字典编码" label-width="100px" prop="code">
+        <el-input v-model="dict.code" clearable/>
+      </el-form-item>
+      <el-form-item label="字典名称" label-width="100px" prop="name">
+        <el-input v-model="dict.name" clearable/>
+      </el-form-item>
+    </el-form>
+    <template #footer>
+      <div class="dialog-footer">
+        <el-button @click="dialogFormVisible = false">取消</el-button>
+        <el-button type="primary" @click="save">确定</el-button>
+      </div>
+    </template>
+  </el-dialog>
 </template>
 
 <style scoped>

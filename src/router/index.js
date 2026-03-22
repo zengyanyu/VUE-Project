@@ -2,6 +2,7 @@ import EmployeeList from '../views/emp/index.vue'
 import ClazzList from '../views/clazz/index.vue'
 import StuList from '../views/stu/index.vue'
 import DepartmentList from '../views/dept/index.vue'
+import RoleList from '../views/role/index.vue'
 import StuStatList from '../views/stuStat/index.vue'
 import EmpStatList from '../views/empStat/index.vue'
 import DictList from '../views/dict/index.vue'
@@ -65,6 +66,11 @@ const routes = [
                 path: '/dict',
                 name: 'dict',
                 component: DictList
+            },
+            {
+                path: '/role',
+                name: 'role',
+                component: RoleList
             }
         ]
     },
