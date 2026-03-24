@@ -1,6 +1,8 @@
 <script setup>
 import {ref} from 'vue'
 import {ElMessage} from 'element-plus'
+import {loginApi} from "../api/login";
+import {useRouter} from 'vue-router'
 
 // 表单数据
 const loginForm = ref({
@@ -8,14 +10,23 @@ const loginForm = ref({
   password: ''
 })
 
-// 登录提交
-const handleLogin = () => {
-  if (!loginForm.value.username || !loginForm.value.password) {
-    ElMessage.warning('请输入用户名和密码')
-    return
-  }
-  ElMessage.success('登录成功')
+const router = useRouter();
+
+// 登录操作
+const handleLogin = async () => {
   // 这里可以替换为实际接口请求
+  const result = await loginApi(loginForm.value);
+  if (result.code == '200') {
+    // 1.提示信息
+    ElMessage.success('登录成功')
+    // 2.存储当前登录的用户信息
+    localStorage.setItem("loginUser", JSON.stringify(result.data))
+
+    // 2.跳转页面--跳转到[首页]
+    router.push("/index");
+  } else {
+    ElMessage.warning(result.msg)
+  }
 }
 
 // 取消重置
@@ -27,34 +38,34 @@ const handleCancel = () => {
 <template>
   <div class="login-container">
     <!-- 左侧插画区域 -->
-    <div class="left-section">
-      <div class="logo">
-        <img src="https://www.itheima.com/favicon.ico" alt="程序员" class="logo-img"/>
-        <div class="logo-text">
-          <h2>程序员</h2>
-          <p>www.zengyanyu.com</p>
-        </div>
-      </div>
-      <div class="illustration">
-        <!-- 插画内容 -->
-        <div class="tag tag-1">责任</div>
-        <div class="tag tag-2">务实</div>
-        <div class="tag tag-3">创新</div>
-        <div class="tag tag-4">育人</div>
-        <!-- 人物头像占位 -->
-        <div class="avatars">
-          <div v-for="i in 10" :key="i" class="avatar-item"></div>
-        </div>
-        <!-- 场景插画简化 -->
-        <div class="scene">
-          <div class="stage"></div>
-          <div class="person person-1"></div>
-          <div class="person person-2"></div>
-          <div class="person person-3"></div>
-          <div class="person person-4"></div>
-        </div>
-      </div>
-    </div>
+    <!--    <div class="left-section">
+          <div class="logo">
+            <img src="https://www.itheima.com/favicon.ico" alt="程序员" class="logo-img"/>
+            <div class="logo-text">
+              <h2>程序员</h2>
+              <p>www.zengyanyu.com</p>
+            </div>
+          </div>
+          <div class="illustration">
+            &lt;!&ndash; 插画内容 &ndash;&gt;
+            <div class="tag tag-1">责任</div>
+            <div class="tag tag-2">务实</div>
+            <div class="tag tag-3">创新</div>
+            <div class="tag tag-4">育人</div>
+            &lt;!&ndash; 人物头像占位 &ndash;&gt;
+            <div class="avatars">
+              <div v-for="i in 10" :key="i" class="avatar-item"></div>
+            </div>
+            &lt;!&ndash; 场景插画简化 &ndash;&gt;
+            <div class="scene">
+              <div class="stage"></div>
+              <div class="person person-1"></div>
+              <div class="person person-2"></div>
+              <div class="person person-3"></div>
+              <div class="person person-4"></div>
+            </div>
+          </div>
+        </div>-->
 
     <!-- 右侧登录表单 -->
     <div class="right-section">
