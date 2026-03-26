@@ -5,6 +5,15 @@ export const queryAllApi = () => {
     return request.get("/log-record/findAll");
 }
 
+// 导出
+export const exportExcelApi = () => {
+    return request({
+        url: '/log-record/exportExcel',
+        method: 'post',
+        responseType: 'blob'
+    })
+}
+
 // 分页查询
 export const queryPageApi = (pageNum, pageSize, startTime, endTime, operateName) => {
     return request.get(`/log-record/page?pageNum=${pageNum}&pageSize=${pageSize}&startTime=${startTime}&endTime=${endTime}&operateName=${operateName}`);

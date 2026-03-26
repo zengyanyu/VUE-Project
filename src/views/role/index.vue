@@ -62,7 +62,7 @@ const addRole = () => {
 }
 
 // 导出操作
-const exportRole = async () => {
+const exportExcel = async () => {
   try {
     const blob = await exportExcelApi();
 
@@ -183,7 +183,7 @@ const handleCurrentChange = (val) => {
 
   <div class="container">
     <el-button type="primary" @click="addRole" size="small"> + 新增角色</el-button>
-    <el-button type="primary" @click="exportRole" size="small">
+    <el-button type="primary" @click="exportExcel" size="small">
       <el-icon>
         <Download/>
       </el-icon>

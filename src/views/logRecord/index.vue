@@ -1,7 +1,8 @@
 <script setup>
 
-import {queryPageApi} from '../../api/logRecord.js'
+import {queryPageApi, exportExcelApi} from '../../api/logRecord.js'
 import {onMounted, ref, watch} from "vue";
+import {ElMessage} from "element-plus";
 
 onMounted(() => {
   search()
@@ -70,11 +71,38 @@ const handleSizeChange = (val) => {
 const handleCurrentChange = (val) => {
   search();
 }
+
+// 导出操作
+const exportExcel = async () => {
+  try {
+    const blob = await exportExcelApi();
+
+    const url = URL.createObjectURL(blob)
+    const a = document.createElement('a')
+    a.href = url
+    a.download = `日志记录_${new Date().getTime()}.xlsx`
+    a.click()
+    URL.revokeObjectURL(url)
+
+    ElMessage?.success('导出成功')
+  } catch (err) {
+    ElMessage?.error('导出失败')
+    console.error('导出异常：', err)
+  }
+}
+
 </script>
 
 <template>
   <h3>日志记录</h3>
-
+  <div class="container">
+    <el-button type="primary" @click="exportExcel" size="small">
+      <el-icon>
+        <Download/>
+      </el-icon>
+      导出
+    </el-button>
+  </div>
   <div class="container">
     <el-form :inline="true" :model="queryForm" class="demo-form-inline">
       <el-form-item label="操作名称">
