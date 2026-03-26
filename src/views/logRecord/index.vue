@@ -103,8 +103,8 @@ const handleCurrentChange = (val) => {
         <el-table-column prop="method" label="请求方式" width="100" align="center"/>
         <el-table-column prop="operateName" label="操作名称" align="center"/>
         <el-table-column prop="path" label="请求路径" align="center"/>
-        <el-table-column prop="requestTime" label="请求开始时间" width="180" align="center"/>
-        <el-table-column prop="responseTime" label="请求结束时间" width="180" align="center"/>
+        <el-table-column prop="requestTime" label="请求时间" width="180" align="center"/>
+        <el-table-column prop="responseTime" label="响应时间" width="180" align="center"/>
         <el-table-column prop="status" label="操作状态" width="100" align="center"/>
       </el-table>
     </el-scrollbar>

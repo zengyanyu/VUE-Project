@@ -10,6 +10,15 @@ export const addApi = (dept) => {
     return request.post("/role/save", dept);
 }
 
+// 导出
+export const exportExcelApi = () => {
+    return request({
+        url: '/role/exportExcel',
+        method: 'post',
+        responseType: 'blob'
+    })
+}
+
 // 根据主键ID查询
 export const queryByIdApi = (id) => {
     return request.get(`/role/get/${id}`);

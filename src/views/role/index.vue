@@ -1,5 +1,5 @@
 <script setup>
-import {queryPageApi, queryByIdApi, deleteByIdApi, addApi} from '../../api/role.js'
+import {queryPageApi, queryByIdApi, deleteByIdApi, exportExcelApi, addApi} from '../../api/role.js'
 import {onMounted, ref, watch} from "vue";
 import {ElMessage, ElMessageBox} from "element-plus";
 
@@ -58,6 +58,25 @@ const addRole = () => {
   // 重置表单的校验规则-提示信息
   if (roleFormRef.value) {
     roleFormRef.value.resetFields();
+  }
+}
+
+// 导出操作
+const exportRole = async () => {
+  try {
+    const blob = await exportExcelApi();
+
+    const url = URL.createObjectURL(blob)
+    const a = document.createElement('a')
+    a.href = url
+    a.download = `角色_${new Date().getTime()}.xlsx`
+    a.click()
+    URL.revokeObjectURL(url)
+
+    ElMessage?.success('导出成功')
+  } catch (err) {
+    ElMessage?.error('导出失败')
+    console.error('导出异常：', err)
   }
 }
 
@@ -164,6 +183,12 @@ const handleCurrentChange = (val) => {
 
   <div class="container">
     <el-button type="primary" @click="addRole" size="small"> + 新增角色</el-button>
+    <el-button type="primary" @click="exportRole" size="small">
+      <el-icon>
+        <Download/>
+      </el-icon>
+      导出
+    </el-button>
   </div>
   <div class="container">
     <el-form :inline="true" :model="queryForm" class="demo-form-inline">
