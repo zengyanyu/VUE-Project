@@ -3,7 +3,7 @@
 </script>
 
 <template>
-  员工信息统计
+    员工信息统计
 </template>
 
 <style scoped>

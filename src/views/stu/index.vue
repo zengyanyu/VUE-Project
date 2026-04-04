@@ -3,7 +3,7 @@
 </script>
 
 <template>
-  学员
+    学员
 </template>
 
 <style scoped>
