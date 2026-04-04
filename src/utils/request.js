@@ -1,4 +1,6 @@
 import axios from "axios";
+import {ElMessage} from "element-plus";
+import router from '../router'
 
 // 创建axios实例对象
 const request = axios.create({
@@ -27,6 +29,13 @@ request.interceptors.response.use(
         return response.data;
     },
     (error) => {// 失败回调
+        if (error.response.status === 401) {// 全等
+            // console.log("error response status 401");
+            // 提示信息
+            ElMessage.error("登录超时,请重新登录");
+            // 跳转到登录页面
+            router.push("/login")
+        }
         return Promise.reject(error)
     }
 )

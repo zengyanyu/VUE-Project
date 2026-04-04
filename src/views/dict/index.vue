@@ -86,7 +86,7 @@
             '确认删除操作?',
             '温馨提示',
             {
-                confirmButtonText: '确定',
+                confirmButtonText: '确认',
                 cancelButtonText: '取消',
                 type: 'warning',
             }
@@ -230,7 +230,7 @@
         <template #footer>
             <div class="dialog-footer">
                 <el-button @click="dialogFormVisible = false">取消</el-button>
-                <el-button type="primary" @click="save">确定</el-button>
+                <el-button type="primary" @click="save">确认</el-button>
             </div>
         </template>
     </el-dialog>

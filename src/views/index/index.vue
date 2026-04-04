@@ -4,15 +4,8 @@
     import {ElCard, ElRow, ElCol, ElIcon, ElButton, ElTable, ElTableColumn} from 'element-plus'
 
     import {
-        User,
-        OfficeBuilding,
-        Document,
-        CollectionTag,
-        Avatar,
-        TrendCharts,
-        Bell,
-        Calendar,
-        Setting
+        User, OfficeBuilding, Document, CollectionTag, Avatar,
+        TrendCharts, Bell, Calendar, Setting
     } from '@element-plus/icons-vue'
 
     // 路由实例
@@ -20,10 +13,10 @@
 
     // 统计数据
     const statsData = ref([
-        {label: '班级总数', icon: User, value: '28', color: '#409EFF'},
-        {label: '学员人数', icon: User, Avatar: '1256', color: '#67C23A'},
-        {label: '部门数量', icon: User, OfficeBuilding: '12', color: '#E6A23C'},
-        {label: '员工人数', icon: User, User: '86', color: '#F56C6C'}
+        {label: '班级总数', value: '28', icon: User, color: '#409EFF'},
+        {label: '学员人数', value: '1256', icon: Avatar, color: '#67C23A'},
+        {label: '部门数量', value: '12', icon: OfficeBuilding, color: '#E6A23C'},
+        {label: '员工人数', value: '86', icon: User, color: '#F56C6C'}
     ])
 
     // 快捷入口
@@ -47,7 +40,7 @@
     // 页面挂载后执行
     onMounted(() => {
         // 可在此处调用接口获取真实数据
-        console.log('首页加载完成')
+        // console.log('首页加载完成')
     })
 
     // 跳转页面
