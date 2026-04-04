@@ -1,26 +1,39 @@
 <script setup>
     import {ref, onMounted} from 'vue'
     import {useRouter} from 'vue-router'
+    import {ElCard, ElRow, ElCol, ElIcon, ElButton, ElTable, ElTableColumn} from 'element-plus'
+
+    import {
+        User,
+        OfficeBuilding,
+        Document,
+        CollectionTag,
+        Avatar,
+        TrendCharts,
+        Bell,
+        Calendar,
+        Setting
+    } from '@element-plus/icons-vue'
 
     // 路由实例
     const router = useRouter();
 
     // 统计数据
     const statsData = ref([
-        {label: '班级总数', value: '28', color: '#409EFF'},
-        {label: '学员人数', value: '1256', color: '#67C23A'},
-        {label: '部门数量', value: '12', color: '#E6A23C'},
-        {label: '员工人数', value: '86', color: '#F56C6C'}
+        {label: '班级总数', icon: User, value: '28', color: '#409EFF'},
+        {label: '学员人数', icon: User, Avatar: '1256', color: '#67C23A'},
+        {label: '部门数量', icon: User, OfficeBuilding: '12', color: '#E6A23C'},
+        {label: '员工人数', icon: User, User: '86', color: '#F56C6C'}
     ])
 
     // 快捷入口
     const quickEntry = ref([
-        {label: '班级管理', path: '/clazz', color: '#409EFF'},
-        {label: '部门管理', path: '/dept', color: '#67C23A'},
-        {label: '员工管理', path: '/emp', color: '#E6A23C'},
-        {label: '日志记录', path: '/logRecord', color: '#F56C6C'},
-        {label: '字典管理', path: '/dict', color: '#909399'},
-        {label: '角色管理', path: '/role', color: '#722ED1'}
+        {label: '班级管理', icon: User, path: '/clazz', color: '#409EFF'},
+        {label: '部门管理', icon: OfficeBuilding, path: '/dept', color: '#67C23A'},
+        {label: '员工管理', icon: User, path: '/emp', color: '#E6A23C'},
+        {label: '日志记录', icon: Document, path: '/logRecord', color: '#F56C6C'},
+        {label: '字典管理', icon: CollectionTag, path: '/dict', color: '#909399'},
+        {label: '角色管理', icon: Setting, path: '/role', color: '#722ED1'}
     ])
 
     // 待办事项
@@ -53,6 +66,9 @@
                     day: 'numeric', weekday: 'long' }) }}，祝您工作愉快！</p>
             </div>
             <div class="welcome-date">
+                <el-icon :size="40" color="#409EFF">
+                    <Calendar/>
+                </el-icon>
                 <span class="date-text">{{ new Date().toLocaleDateString('zh-CN', { year: 'numeric', month: '2-digit', day: '2-digit' }) }}</span>
             </div>
         </div>
