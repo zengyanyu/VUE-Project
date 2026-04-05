@@ -5,6 +5,11 @@ export const queryAllApi = () => {
     return request.get("/log-record/findAll");
 }
 
+// 批量删除
+export const deleteBatch = (data) => {
+    return request.post("/log-record/del/batch", data);
+}
+
 // 导出
 export const exportExcelApi = () => {
     return request({

@@ -1,7 +1,7 @@
 <script setup>
-    import {queryPageApi, exportExcelApi} from '../../api/logRecord.js'
+    import {queryPageApi, exportExcelApi, deleteBatch} from '../../api/logRecord.js'
     import {onMounted, ref, watch} from "vue";
-    import {ElMessage} from "element-plus";
+    import {ElMessage, ElMessageBox} from "element-plus";
 
     onMounted(() => {
         search()
@@ -27,7 +27,7 @@
             queryForm.value.operateName);
 
         logRecordList.value = result.records;
-        console.log(JSON.stringify(result));
+        // console.log(JSON.stringify(result));
 
         queryForm.value.pageNum = result.current;
         queryForm.value.pageSize = result.size;
@@ -90,6 +90,41 @@
         }
     }
 
+    const multipleSelection = ref([])
+
+    const handleSelectionChange = (val) => {
+        multipleSelection.value = val
+    }
+
+    // 批量删除
+    const batchDelete = async () => {
+        if (multipleSelection.value.length == 0) {
+            ElMessage?.success('请选择要删除的数据!')
+        } else {
+            ElMessageBox.confirm(
+                '您确认要删除选中的数据吗?',
+                '温馨提示',
+                {
+                    confirmButtonText: '确认',
+                    cancelButtonText: '取消',
+                    type: 'warning',
+                }
+            )
+                .then(async () => {// 确认
+                    let ids = multipleSelection.value.map(s => s.id);
+                    console.log(ids);
+                    const result = await deleteBatch(ids);
+                    ElMessage.success({
+                        type: 'success',
+                        message: result.msg
+                    })
+                    search();
+                })
+                .catch(() => {
+                })
+        }
+    }
+
 </script>
 
 <template>
@@ -100,6 +135,12 @@
                 <Download/>
             </el-icon>
             导出
+        </el-button>
+        <el-button type="primary" @click="batchDelete" size="small">
+            <el-icon>
+                <Remove/>
+            </el-icon>
+            批量删除
         </el-button>
     </div>
     <div class="container">
@@ -123,18 +164,17 @@
                 <el-button type="info" @click="clear">清空</el-button>
             </el-form-item>
         </el-form>
-        <el-scrollbar height="400px">
-            <el-table :data="logRecordList" border style="width: 100%">
-                <el-table-column type="selection" width="55"/>
-                <el-table-column type="index" label="序号" width="60" align="center"/>
-                <el-table-column prop="method" label="请求方式" width="100" align="center"/>
-                <el-table-column prop="operateName" label="操作名称" align="center"/>
-                <el-table-column prop="path" label="请求路径" align="center"/>
-                <el-table-column prop="requestTime" label="请求时间" width="180" align="center"/>
-                <el-table-column prop="responseTime" label="响应时间" width="180" align="center"/>
-                <el-table-column prop="status" label="操作状态" width="100" align="center"/>
-            </el-table>
-        </el-scrollbar>
+        <el-table :data="logRecordList" border style="width: 100%"
+                  @selection-change="handleSelectionChange">
+            <el-table-column type="selection" width="55"/>
+            <el-table-column type="index" label="序号" width="60" align="center"/>
+            <el-table-column prop="method" label="请求方式" width="100" align="center"/>
+            <el-table-column prop="operateName" label="操作名称" align="center"/>
+            <el-table-column prop="path" label="请求路径" align="center"/>
+            <el-table-column prop="requestTime" label="请求时间" width="180" align="center"/>
+            <el-table-column prop="responseTime" label="响应时间" width="180" align="center"/>
+            <el-table-column prop="status" label="操作状态" width="100" align="center"/>
+        </el-table>
     </div>
 
     <!-- 分页条 -->
