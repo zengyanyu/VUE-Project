@@ -162,7 +162,7 @@
 </script>
 
 <template>
-    <h3>字典管理</h3>
+    字典管理
 
     <div class="container">
         <el-button type="primary" @click="addDict" size="small"> + 新增字典</el-button>

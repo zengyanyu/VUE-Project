@@ -149,7 +149,7 @@
 </script>
 
 <template>
-    <h3>部门管理</h3>
+    部门管理
 
     <div class="container">
         <el-button type="primary" @click="addDept" size="small"> + 新增部门</el-button>

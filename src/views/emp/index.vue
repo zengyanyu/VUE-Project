@@ -3,7 +3,7 @@
 </script>
 
 <template>
-  <h3>员工管理</h3>
+  员工管理
 </template>
 
 <style scoped>

@@ -128,7 +128,7 @@
 </script>
 
 <template>
-    <h3>日志记录</h3>
+    日志记录
     <div class="container">
         <el-button type="primary" @click="exportExcel" size="small">
             <el-icon>
