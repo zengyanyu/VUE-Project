@@ -6,13 +6,11 @@ onMounted(() => {
   search()
 })
 
-const dictList = ref([])
+const permissionRecordList = ref([])
 
 const dialogFormVisible = ref(false)
 const formTitle = ref('')
-const dictFormRef = ref()
-const dict = ref({
-  code: '',
+const permissionRecord = ref({
   operationName: ''
 })
 
@@ -29,7 +27,7 @@ const search = async () => {
       queryForm.value.pageSize,
       queryForm.value.operationName);
 
-  dictList.value = result.records;
+  permissionRecordList.value = result.records;
 
   queryForm.value.pageNum = result.current;
   queryForm.value.pageSize = result.size;
@@ -71,11 +69,11 @@ const handleCurrentChange = (val) => {
         <el-button type="info" @click="clear">清空</el-button>
       </el-form-item>
     </el-form>
-    <el-table :data="dictList" border style="width: 100%">
+    <el-table :data="permissionRecordList" border style="width: 100%">
       <el-table-column type="index" label="序号" width="60" align="center"/>
-      <el-table-column prop="requestMethod" label="请求方法" align="center"/>
+      <el-table-column prop="requestMethod" label="请求方法" width="100" align="center"/>
       <el-table-column prop="apiOperationName" label="操作名称" align="center"/>
-      <el-table-column prop="methodName" label="方法名称" align="center"/>
+<!--      <el-table-column prop="methodName" label="方法名称" align="center"/>-->
       <el-table-column prop="path" label="路径" align="center"/>
     </el-table>
   </div>
