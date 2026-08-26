@@ -1,18 +1,7 @@
-import EmployeeList from '../views/emp/index.vue'
-import ClazzList from '../views/clazz/index.vue'
-import StuList from '../views/stu/index.vue'
-import DepartmentList from '../views/dept/index.vue'
-import RoleList from '../views/role/index.vue'
-import StuStatList from '../views/stuStat/index.vue'
-import EmpStatList from '../views/empStat/index.vue'
-import DictList from '../views/dict/index.vue'
-import IndexList from '../views/index/index.vue'
 import layoutView from '../views/layout/index.vue'
-import LogRecordList from '../views/logRecord/index.vue'
 import LoginPage from '../login/index.vue'
 import {createRouter, createWebHistory} from 'vue-router'
 
-// 2. 核心：配置 path: '/' 的路由
 const routes = [
     {
         path: '/',
@@ -22,68 +11,79 @@ const routes = [
         children: [
             {
                 path: '/index',
-                name: '',
-                component: IndexList
+                name: 'home', //修复：name不能为空
+                component: () => import('../views/index/index.vue')
             },
             {
                 path: '/clazz',
                 name: 'clazz',
-                component: ClazzList
+                component: () => import('../views/clazz/index.vue')
             },
             {
                 path: '/stu',
                 name: 'stu',
-                component: StuList
+                component: () => import('../views/stu/index.vue')
             },
             {
                 // 员工管理
                 path: '/emp',
                 name: 'emp',
-                component: EmployeeList
+                component: () => import('../views/emp/index.vue')
             },
             {
                 // 部门管理
                 path: '/dept',
                 name: 'dept',
-                component: DepartmentList
+                component: () => import('../views/dept/index.vue')
+            },
+            {
+                // 权限记录
+                path: '/permissionRecord',
+                name: 'permissionRecord',
+                component: () => import('../views/permissionRecord/index.vue')
             },
             {
                 path: '/logRecord',
                 name: 'logRecord',
-                component: LogRecordList
+                component: () => import('../views/logRecord/index.vue')
             },
             {
                 path: '/empStat',
                 name: 'empStat',
-                component: EmpStatList
+                component: () => import('../views/empStat/index.vue')
             },
             {
                 path: '/stuStat',
                 name: 'stuStat',
-                component: StuStatList
+                component: () => import('../views/stuStat/index.vue')
             },
             {
                 path: '/dict',
                 name: 'dict',
-                component: DictList
+                component: () => import('../views/dict/index.vue')
             },
             {
                 path: '/role',
                 name: 'role',
-                component: RoleList
+                component: () => import('../views/role/index.vue')
             }
         ]
     },
     {
-        path: '/login',// 登录
+        path: '/login',
         name: "login",
         component: LoginPage
+    },
+    // 新增404兜底，任意不存在路由跳首页
+    {
+        path: '/:pathMatch(.*)*',
+        redirect: '/index'
     }
 ]
 
 const router = createRouter({
     history: createWebHistory(import.meta.env.BASE_URL),
-    routes: routes
+    routes
 })
 
 export default router

@@ -7,6 +7,7 @@ import path from 'path'
 // https://vitejs.dev/config/
 export default defineConfig({
     plugins: [vue()],
+
     resolve: {
         alias: {
             '@': fileURLToPath(new URL('./src', import.meta.url))
@@ -26,6 +27,13 @@ export default defineConfig({
                 changeOrigin: true,
                 rewrite: (path) => path.replace(/^\/api/, '')
             }
+        },
+        hmr: true,
+        // 强制轮询磁盘，放弃系统文件事件
+        watch: {
+            usePolling: true,
+            interval: 300, // 每300ms扫描磁盘，缩短间隔
+            aggregateTimeout: 100
         }
     }
 })
