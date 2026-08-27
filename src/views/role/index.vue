@@ -182,27 +182,33 @@ const handleCurrentChange = (val) => {
   角色管理
 
   <div class="container">
-    <el-button type="primary" @click="addRole" size="small"> + 新增角色</el-button>
-    <el-button type="primary" @click="exportExcel" size="small">
-      <el-icon>
-        <Download/>
-      </el-icon>
-      导出
-    </el-button>
-  </div>
-  <div class="container">
-    <el-form :inline="true" :model="queryForm" class="demo-form-inline">
+    <!-- inline行内表单 -->
+    <el-form :inline="true" :model="queryForm" class="demo-form-inline"
+             style="display: flex; width: 100%; align-items: center;">
       <el-form-item label="角色编码">
         <el-input v-model="queryForm.roleCode" placeholder="请输入角色编码" clearable/>
       </el-form-item>
-      <el-form-item label="角色名称">
+      <el-form-item label="角色名称" style="margin-right:10px;">
         <el-input v-model="queryForm.roleName" placeholder="请输入角色名称" clearable/>
       </el-form-item>
-      <el-form-item>
+      <el-form-item style="margin-right:10px;">
         <el-button type="primary" @click="search">查询</el-button>
         <el-button type="info" @click="clear">清空</el-button>
       </el-form-item>
+      <!-- 重点：margin-left: auto 推到最右边 -->
+      <el-form-item style="margin-left: auto">
+        <el-button type="primary" @click="addRole"> + 新增角色</el-button>
+        <el-button type="primary" @click="exportExcel">
+          <el-icon>
+            <Download/>
+          </el-icon>
+          导出
+        </el-button>
+      </el-form-item>
     </el-form>
+  </div>
+
+  <div class="container">
     <el-table :data="roleList" border style="width: 100%">
       <el-table-column type="index" label="序号" width="60" align="center"/>
       <el-table-column prop="roleCode" label="角色编码" align="center"/>

@@ -61,10 +61,10 @@ const handleCurrentChange = (val) => {
   </div>
   <div class="container">
     <el-form :inline="true" :model="queryForm" class="demo-form-inline">
-      <el-form-item label="操作名称">
+      <el-form-item label="操作名称" style="margin-right:10px;">
         <el-input v-model="queryForm.operationName" placeholder="请输入操作名称" clearable/>
       </el-form-item>
-      <el-form-item>
+      <el-form-item style="margin-right:10px;">
         <el-button type="primary" @click="search">查询</el-button>
         <el-button type="info" @click="clear">清空</el-button>
       </el-form-item>
@@ -73,7 +73,7 @@ const handleCurrentChange = (val) => {
       <el-table-column type="index" label="序号" width="60" align="center"/>
       <el-table-column prop="requestMethod" label="请求方法" width="100" align="center"/>
       <el-table-column prop="apiOperationName" label="操作名称" align="center"/>
-<!--      <el-table-column prop="methodName" label="方法名称" align="center"/>-->
+      <!--      <el-table-column prop="methodName" label="方法名称" align="center"/>-->
       <el-table-column prop="path" label="路径" align="center"/>
     </el-table>
   </div>

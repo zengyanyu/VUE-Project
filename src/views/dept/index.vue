@@ -1,8 +1,8 @@
 <script setup>
 import {ref, onMounted} from 'vue'
-
 import {queryPageApi, addApi, queryByIdApi, deleteByIdApi} from '../../api/dept.js'
 import {ElMessage, ElMessageBox} from "element-plus";
+import {EditPen, Delete} from '@element-plus/icons-vue'
 
 onMounted(() => {
   search()
@@ -19,9 +19,7 @@ const search = async () => {
   const result = await queryPageApi(queryForm.value.pageNum,
       queryForm.value.pageSize,
       queryForm.value.deptName);
-
   deptList.value = result.records;
-
   queryForm.value.pageNum = result.current;
   queryForm.value.pageSize = result.size;
   queryForm.value.total = result.total;
@@ -50,7 +48,6 @@ const dept = ref({
 const addDept = () => {
   dialogFormVisible.value = true
   formTitle.value = '新增部门'
-
   dept.value = {deptName: ''}
   // 重置表单的校验规则-提示信息
   if (deptFormRef.value) {
@@ -65,7 +62,6 @@ const edit = async (id) => {
   if (deptFormRef.value) {
     deptFormRef.value.resetFields();
   }
-
   // 查询数据
   const result = await queryByIdApi(id);
   if (result.code == '200') {
@@ -88,7 +84,6 @@ const deleteBtn = (id) => {
   )
       .then(async () => {
         const result = await deleteByIdApi(id);
-
         ElMessage({
           type: 'success',
           message: result.msg,
@@ -96,10 +91,6 @@ const deleteBtn = (id) => {
         search()
       })
       .catch(() => {
-        // ElMessage({
-        //   type: 'info',
-        //   // message: 'Delete canceled',
-        // })
       })
 }
 
@@ -150,21 +141,25 @@ const handleCurrentChange = (val) => {
 
 <template>
   部门管理
-
   <div class="container">
-    <el-button type="primary" @click="addDept" size="small"> + 新增部门</el-button>
-  </div>
-
-  <div class="container">
-    <el-form :inline="true" :model="queryForm" class="demo-form-inline">
-      <el-form-item label="部门名称">
+    <!-- inline行内表单 -->
+    <el-form :inline="true" :model="queryForm" class="demo-form-inline"
+             style="display: flex; width: 100%; align-items: center;">
+      <el-form-item label="部门名称" style="margin-right:10px;">
         <el-input v-model="queryForm.deptName" placeholder="请输入部门名称" clearable/>
       </el-form-item>
-      <el-form-item>
+      <el-form-item style="margin-right:10px;">
         <el-button type="primary" @click="search">查询</el-button>
         <el-button type="info" @click="clear">清空</el-button>
       </el-form-item>
+      <!-- 重点：margin-left: auto 推到最右边 -->
+      <el-form-item style="margin-left: auto">
+        <el-button type="primary" @click="addDept"> + 新增部门</el-button>
+      </el-form-item>
     </el-form>
+  </div>
+
+  <div class="container">
     <el-table :data="deptList" border style="width: 100%">
       <el-table-column type="index" label="序号" width="100" align="center"/>
       <el-table-column prop="deptName" label="部门名称" width="300" align="center"/>
@@ -205,7 +200,6 @@ const handleCurrentChange = (val) => {
 
   <!--  Dialog对话框  -->
   <el-dialog v-model="dialogFormVisible" :title='formTitle' width="500">
-    <!--    {{dept}}-->
     <el-form :model="dept" :rules="rules" ref="deptFormRef">
       <el-form-item label="部门名称" label-width="100px" prop="deptName">
         <el-input v-model="dept.deptName" clearable/>
@@ -218,7 +212,6 @@ const handleCurrentChange = (val) => {
       </div>
     </template>
   </el-dialog>
-
 </template>
 
 <style scoped>

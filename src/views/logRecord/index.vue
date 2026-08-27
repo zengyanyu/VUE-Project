@@ -129,26 +129,15 @@ const batchDelete = async () => {
 
 <template>
   日志记录
+
   <div class="container">
-    <el-button type="primary" @click="exportExcel" size="small">
-      <el-icon>
-        <Download/>
-      </el-icon>
-      导出
-    </el-button>
-    <el-button type="primary" @click="batchDelete" size="small">
-      <el-icon>
-        <Remove/>
-      </el-icon>
-      批量删除
-    </el-button>
-  </div>
-  <div class="container">
-    <el-form :inline="true" :model="queryForm" class="demo-form-inline">
+    <!-- inline行内表单 -->
+    <el-form :inline="true" :model="queryForm" class="demo-form-inline"
+             style="display: flex; width: 100%; align-items: center;">
       <el-form-item label="操作名称">
         <el-input v-model="queryForm.operateName" placeholder="请输入操作名称" clearable/>
       </el-form-item>
-      <el-form-item label="请求时间">
+      <el-form-item label="请求时间" style="margin-right:10px;">
         <el-date-picker
             v-model="queryForm.date"
             type="daterange"
@@ -159,11 +148,29 @@ const batchDelete = async () => {
             clearable
         />
       </el-form-item>
-      <el-form-item>
+      <el-form-item style="margin-right:10px;">
         <el-button type="primary" @click="search">查询</el-button>
         <el-button type="info" @click="clear">清空</el-button>
       </el-form-item>
+      <!-- 重点：margin-left: auto 推到最右边 -->
+      <el-form-item style="margin-left: auto">
+        <el-button type="primary" @click="exportExcel">
+          <el-icon>
+            <Download/>
+          </el-icon>
+          导出
+        </el-button>
+        <el-button type="primary" @click="batchDelete">
+          <el-icon>
+            <Remove/>
+          </el-icon>
+          批量删除
+        </el-button>
+      </el-form-item>
     </el-form>
+  </div>
+
+  <div class="container">
     <el-table :data="logRecordList" border style="width: 100%"
               @selection-change="handleSelectionChange">
       <el-table-column type="selection" width="55"/>
