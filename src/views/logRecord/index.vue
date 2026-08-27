@@ -129,15 +129,18 @@ const batchDelete = async () => {
 
 <template>
   日志记录
-
   <div class="container">
     <!-- inline行内表单 -->
-    <el-form :inline="true" :model="queryForm" class="demo-form-inline"
-             style="display: flex; width: 100%; align-items: center;">
-      <el-form-item label="操作名称">
+    <el-form
+        :inline="true"
+        :model="queryForm"
+        class="demo-form-inline"
+        style="display: flex; width:100%; align-items:center; margin:0;"
+    >
+      <el-form-item label="操作名称" style="margin:0 10px 0 0;">
         <el-input v-model="queryForm.operateName" placeholder="请输入操作名称" clearable/>
       </el-form-item>
-      <el-form-item label="请求时间" style="margin-right:10px;">
+      <el-form-item label="请求时间" style="margin:0 10px 0 0;">
         <el-date-picker
             v-model="queryForm.date"
             type="daterange"
@@ -148,12 +151,12 @@ const batchDelete = async () => {
             clearable
         />
       </el-form-item>
-      <el-form-item style="margin-right:10px;">
+      <el-form-item style="margin:0 10px 0 0;">
         <el-button type="primary" @click="search">查询</el-button>
         <el-button type="info" @click="clear">清空</el-button>
       </el-form-item>
       <!-- 重点：margin-left: auto 推到最右边 -->
-      <el-form-item style="margin-left: auto">
+      <el-form-item style="margin:0 0 0 auto;">
         <el-button type="primary" @click="exportExcel">
           <el-icon>
             <Download/>
@@ -202,17 +205,5 @@ const batchDelete = async () => {
 <style scoped>
 .container {
   margin: 10px 0px;
-}
-
-.scrollbar-demo-item {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  height: 50px;
-  margin: 10px;
-  text-align: center;
-  border-radius: 4px;
-  background: var(--el-color-primary-light-9);
-  color: var(--el-color-primary);
 }
 </style>

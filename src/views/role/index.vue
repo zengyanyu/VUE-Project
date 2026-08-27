@@ -180,23 +180,26 @@ const handleCurrentChange = (val) => {
 
 <template>
   角色管理
-
   <div class="container">
     <!-- inline行内表单 -->
-    <el-form :inline="true" :model="queryForm" class="demo-form-inline"
-             style="display: flex; width: 100%; align-items: center;">
-      <el-form-item label="角色编码">
+    <el-form
+        :inline="true"
+        :model="queryForm"
+        class="demo-form-inline"
+        style="display: flex; width:100%; align-items:center; margin:0;"
+    >
+      <el-form-item label="角色编码" style="margin:0 10px 0 0;">
         <el-input v-model="queryForm.roleCode" placeholder="请输入角色编码" clearable/>
       </el-form-item>
-      <el-form-item label="角色名称" style="margin-right:10px;">
+      <el-form-item label="角色名称" style="margin:0 10px 0 0;">
         <el-input v-model="queryForm.roleName" placeholder="请输入角色名称" clearable/>
       </el-form-item>
-      <el-form-item style="margin-right:10px;">
+      <el-form-item style="margin:0 10px 0 0;">
         <el-button type="primary" @click="search">查询</el-button>
         <el-button type="info" @click="clear">清空</el-button>
       </el-form-item>
       <!-- 重点：margin-left: auto 推到最右边 -->
-      <el-form-item style="margin-left: auto">
+      <el-form-item style="margin:0 0 0 auto;">
         <el-button type="primary" @click="addRole"> + 新增角色</el-button>
         <el-button type="primary" @click="exportExcel">
           <el-icon>

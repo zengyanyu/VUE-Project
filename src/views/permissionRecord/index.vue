@@ -58,17 +58,24 @@ const handleCurrentChange = (val) => {
 <template>
   权限记录
   <div class="container">
-  </div>
-  <div class="container">
-    <el-form :inline="true" :model="queryForm" class="demo-form-inline">
-      <el-form-item label="操作名称" style="margin-right:10px;">
+    <!-- inline行内表单 -->
+    <el-form
+        :inline="true"
+        :model="queryForm"
+        class="demo-form-inline"
+        style="display: flex; width:100%; align-items:center; margin:0;"
+    >
+      <el-form-item label="操作名称" style="margin:0 10px 0 0;">
         <el-input v-model="queryForm.operationName" placeholder="请输入操作名称" clearable/>
       </el-form-item>
-      <el-form-item style="margin-right:10px;">
+      <el-form-item style="margin:0 10px 0 0;">
         <el-button type="primary" @click="search">查询</el-button>
         <el-button type="info" @click="clear">清空</el-button>
       </el-form-item>
     </el-form>
+  </div>
+
+  <div class="container">
     <el-table :data="permissionRecordList" border style="width: 100%">
       <el-table-column type="index" label="序号" width="60" align="center"/>
       <el-table-column prop="requestMethod" label="请求方法" width="100" align="center"/>
