@@ -10,7 +10,7 @@ onMounted(() => {
 
 const queryForm = ref({
   pageNum: 1,
-  pageSize: 10,
+  pageSize: 20,
   total: 0,
   deptName: ''
 })

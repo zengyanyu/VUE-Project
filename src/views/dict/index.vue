@@ -20,7 +20,7 @@ const dict = ref({
 const queryForm = ref({
   operateName: '',
   pageNum: 1,
-  pageSize: 10,
+  pageSize: 20,
   total: 0,
   code: '',
   name: ''
